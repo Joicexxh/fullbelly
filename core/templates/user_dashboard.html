@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pt-br">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Painel — Full Belly</title>
+<link rel="stylesheet" href="/static/css/style.css"></head>
+<body>
+  <header class="site-header container">
+    <h1>Painel do Usuário</h1>
+    <nav><a href="{% url 'index' %}">Home</a> | <a href="{% url 'logout' %}">Sair</a></nav>
+  </header>
+  <main class="container">
+    <h2>Olá, {{ user.username }}!</h2>
+
+    <section>
+      <h3>Publicar oferta (doar)</h3>
+      <form method="post" action="/api/donations/">{% csrf_token %}
+        <label>Título</label><input name="title" required>
+        <label>Descrição</label><textarea name="description" required></textarea>
+        <label>Quantidade / Observações</label><input name="quantity">
+        <label>Validade (opcional)</label><input name="expires" placeholder="YYYY-MM-DD">
+        <button type="submit">Publicar oferta</button>
+      </form>
+      <p>Obs: esta publicação usa a API. Em seguida você deverá ver sua oferta em Minhas ofertas.</p>
+    </section>
+
+    <section>
+      <h3>Minhas ofertas</h3>
+      <ul>
+        {% for d in donations %}
+          <li><strong>{{ d.title }}</strong> — {{ d.description }} ({{ d.status }})</li>
+        {% empty %}
+          <li>Você ainda não publicou ofertas.</li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <section>
+      <h3>Meus pedidos</h3>
+      <ul>
+        {% for r in requests %}
+          <li><strong>{{ r.title }}</strong> — {{ r.description }} ({{ r.status }})</li>
+        {% empty %}
+          <li>Você ainda não fez pedidos.</li>
+        {% endfor %}
+      </ul>
+    </section>
+  </main>
+  <script src="/static/js/main.js"></script>
+</body>
+</html>

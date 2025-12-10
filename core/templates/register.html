@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="pt-br">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Cadastro — Full Belly</title>
+<link rel="stylesheet" href="/static/css/style.css"></head>
+<body>
+  <main class="auth container">
+    <h2>Cadastre-se</h2>
+    {% if messages %}{% for m in messages %}<div class="msg">{{ m }}</div>{% endfor %}{% endif %}
+    <form method="post">{% csrf_token %}
+      <label>Nome de usuário</label>
+      <input name="username" required />
+      <label>Email</label>
+      <input name="email" type="email" required />
+      <label>Senha</label>
+      <input name="password" type="password" required />
+      <button type="submit">Cadastrar</button>
+    </form>
+    <p>Já tem conta? <a href="{% url 'login' %}">Entrar</a></p>
+  </main>
+</body>
+</html>

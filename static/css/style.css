@@ -1,0 +1,28 @@
+:root{
+  --bg:#fff; --muted:#666; --accent:#b11717; --card:#f7f5ff; --max:1100px;
+}
+*{box-sizing:border-box;font-family: "Inter", system-ui, sans-serif}
+body{margin:0;background:var(--bg);color:#222;line-height:1.4}
+.container{max-width:var(--max);margin:0 auto;padding:20px}
+.site-header{background:linear-gradient(90deg,#aa0101,#f8b2a5);color:white;padding:18px 0}
+.site-header h1{margin:0;font-size:20px}
+.site-header .tagline{opacity:.95;margin:6px 0 0}
+.site-header nav{margin-top:8px}
+.site-header a{color:rgba(255,255,255,.95);text-decoration:none;margin-right:8px}
+.hero{padding:26px 0}
+.hero h2{margin:0 0 8px}
+.btn{display:inline-block;padding:10px 14px;border-radius:8px;background:var(--accent);color:white;text-decoration:none;margin-right:8px}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:14px}
+.cards article{background:var(--card);padding:16px;border-radius:8px}
+.panel{background:#fff;padding:14px;border-radius:8px;margin-top:14px;border:1px solid #eee}
+.testimonials blockquote{background:#fafafa;padding:12px;border-left:4px solid var(--accent);margin:10px 0}
+.latest ul{list-style:none;padding:0}
+.latest li{padding:6px 0;border-bottom:1px dashed #eee}
+.auth{max-width:420px;margin:40px auto;background:#fff;padding:18px;border-radius:8px;border:1px solid #eee}
+.auth label{display:block;margin-top:10px;font-size:14px;color:var(--muted)}
+.auth input, .auth textarea, .auth select{width:100%;padding:8px;margin-top:6px;border-radius:6px;border:1px solid #ddd}
+.auth button{margin-top:12px;padding:10px 14px;border-radius:6px;background:var(--accent);color:white;border:0}
+table{width:100%;border-collapse:collapse}
+table th, table td{padding:8px;border-bottom:1px solid #eee;text-align:left}
+.msg{background:#fffbeb;border-left:4px solid #f2c94c;padding:8px;margin:8px 0;border-radius:4px}

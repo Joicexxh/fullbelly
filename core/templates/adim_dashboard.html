@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pt-br">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin — Full Belly</title>
+<link rel="stylesheet" href="/static/css/style.css"></head>
+<body>
+  <header class="site-header container">
+    <h1>Painel Admin</h1>
+    <nav><a href="{% url 'index' %}">Home</a> | <a href="{% url 'logout' %}">Sair</a></nav>
+  </header>
+  <main class="container">
+    <section>
+      <h2>Usuários</h2>
+      <table>
+        <thead><tr><th>Nome</th><th>Email</th><th>Data</th></tr></thead>
+        <tbody>
+          {% for u in users %}
+            <tr><td>{{ u.username }}</td><td>{{ u.email }}</td><td>{{ u.date_joined }}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Doações</h2>
+      <ul>
+        {% for d in donations %}
+          <li><strong>{{ d.title }}</strong> — {{ d.description }} (por {{ d.donor.username }})</li>
+        {% empty %}<li>Sem doações registradas.</li>{% endfor %}
+      </ul>
+    </section>
+
+    <section>
+      <h2>Pedidos</h2>
+      <ul>
+        {% for r in requests %}
+          <li><strong>{{ r.title }}</strong> — {{ r.description }} (por {{ r.requester.username }})</li>
+        {% empty %}<li>Sem pedidos registrados.</li>{% endfor %}
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
