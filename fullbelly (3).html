@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Full Belly — Conectando Solidariedade</title>
+
+<!-- Font Awesome (ícones) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<style>
+  :root{
+    --bg: #fff8f7;
+    --card: #fff5f5;
+    --accent: #9b1f1f;     /* vermelho escuro */
+    --accent-2: #b83333;   /* vermelho médio */
+    --gold: #d4af37;
+    --muted: #6b3030;
+    --radius: 12px;
+    --glass: rgba(255,255,255,0.6);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family: Inter, "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: linear-gradient(180deg, var(--bg), #fff);
+    color: var(--muted);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+  }
+
+  /* Topbar / header */
+  header.appbar{
+    background: linear-gradient(90deg,var(--accent),var(--accent-2));
+    color: #fff;
+    padding:22px 18px;
+    display:flex;
+    gap:20px;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .brand{
+    display:flex;
+    gap:14px;
+    align-items:center;
+  }
+  .brand .logo{
+    width:56px;
+    height:56px;
+    border-radius:12px;
+    background:linear-gradient(135deg,#ffefef,#fff5f5);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--accent);
+    font-weight:800;
+    font-size:20px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    transform: translateY(-2px);
+  }
+  .brand h1{ margin:0; font-size:18px; letter-spacing:0.2px; }
+  .brand p{ margin:0; font-size:12px; opacity:0.95 }
+
+  nav.topnav{ display:flex; gap:10px; align-items:center; }
+  nav.topnav a{
+    color: rgba(255,255,255,0.95);
+    text-decoration:none;
+    padding:8px 12px;
+    border-radius:8px;
+    font-weight:600;
+    transition: transform .15s ease, background .15s;
+  }
+  nav.topnav a:hover{ transform: translateY(-3px); background: rgba(255,255,255,0.06) }
+
+  .cta{
+    background:var(--gold);
+    color:#2b1f00;
+    padding:8px 14px;
+    border-radius:8px;
+    font-weight:700;
+    box-shadow: 0 6px 18px rgba(212,175,55,0.14);
+  }
+
+  /* Layout */
+  .container{
+    max-width:1100px;
+    margin:28px auto;
+    padding:0 18px 80px;
+  }
+
+  /* Section "pages" */
+  .page{
+    display:none;
+    animation: fadeIn .45s ease both;
+  }
+  .page.active{ display:block; }
+
+  @keyframes fadeIn{
+    from{ opacity:0; transform: translateY(8px) }
+    to{ opacity:1; transform: translateY(0) }
+  }
+
+  /* Home hero */
+  .hero{
+    display:flex;
+    gap:28px;
+    align-items:center;
+    justify-content:space-between;
+    background: linear-gradient(180deg, rgba(155,31,31,0.06), rgba(255,255,255,0.0));
+    padding:28px;
+    border-radius:14px;
+    box-shadow: 0 6px 20px rgba(155,31,31,0.04);
+  }
+  .hero-left{ max-width:640px }
+  .eyebrow{ color:var(--accent-2); font-weight:700; display:inline-block; margin-bottom:10px; }
+  .hero-left h2{ margin:0 0 12px; color:var(--accent); font-size:28px; }
+  .hero-left p{ margin:0 0 18px; color:#4b2a2a; line-height:1.5 }
+
+  .hero-cta{ display:flex; gap:12px; flex-wrap:wrap }
+  .big-btn{
+    padding:12px 18px;
+    border-radius:10px;
+    font-weight:700;
+    cursor:pointer;
+    border:none;
+    display:inline-flex;
+    gap:10px;
+    align-items:center;
+    transition: transform .14s ease;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+  }
+  .big-btn:active{ transform: translateY(2px) }
+  .doar { background:var(--accent); color:white }
+  .receber { background:white; color:var(--accent); border: 2px solid var(--accent) }
+
+  .hero-right{
+    width:280px;
+    min-width:220px;
+    display:grid;
+    gap:10px;
+  }
+  .metric{
+    background:var(--card);
+    border-radius:12px;
+    padding:14px;
+    text-align:center;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  }
+  .metric strong{ display:block; font-size:20px; color:var(--accent) }
+  .metric small{ display:block; color:#6b3b3b; opacity:.9 }
+/* How it works stepper */
+  .steps{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px; margin-top:18px }
+  .step{
+    background:var(--card);
+    padding:14px;
+    border-radius:12px;
+    text-align:left;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+    transition: transform .18s ease, box-shadow .18s ease;
+  }
+  .step:hover{ transform: translateY(-6px); box-shadow: 0 18px 36px rgba(0,0,0,0.06) }
+  .step .ico{
+    height:44px; width:44px; border-radius:10px; display:inline-flex; align-items:center; justify-content:center;
+    background: linear-gradient(180deg,#fff,#fff7f7); color:var(--accent); box-shadow:0 8px 20px rgba(155,31,31,0.06);
+    margin-bottom:10px; font-size:18px;
+  }
+  .step h4{ margin:6px 0 8px; color:var(--accent-2) }
+  .step p{ margin:0; color:#5a2b2b; font-size:14px }
+
+  /* Card common */
+  .card{
+    background:var(--card);
+    padding:18px;
+    border-radius:12px;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.04);
+  }
+
+  /* Forms */
+  form .row{ display:flex; gap:12px; }
+  form input, form select, form textarea{
+    padding:10px 12px; border-radius:10px; border:1px solid rgba(155,31,31,0.12);
+    background:white; color:#3b2a2a; font-size:14px;
+    outline:none;
+  }
+  label{ display:block; font-weight:700; font-size:13px; margin-bottom:6px; color:var(--accent) }
+  .muted{ color:#6b3b3b; font-size:13px; margin-top:6px }
+
+  .form-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:12px }
+  .full{ grid-column: 1 / -1 }
+
+  .btn-primary{
+    background:var(--accent);
+    color:white;
+    padding:10px 14px;
+    border-radius:10px;
+    border:none;
+    font-weight:700;
+    cursor:pointer;
+    width:100%;
+  }
+
+  /* Doações list */
+  .donations{ display:grid; gap:12px; margin-top:12px }
+  .donation-card{
+    display:flex; gap:12px; align-items:center;
+    padding:12px; border-radius:10px; background:linear-gradient(180deg,#fff,#fff7f7);
+    border-left:6px solid var(--accent-2);
+  }
+  .donation-card .meta{ flex:1 }
+  .donation-card small{ color:#5a2b2b }
+
+  /* Chat */
+  .chat-ui{ display:flex; flex-direction:column; gap:10px }
+  .chat-box{ height:260px; overflow-y:auto; padding:12px; border-radius:10px; background:#fff; border:1px solid rgba(155,31,31,0.06) }
+  .bubble{ display:inline-block; padding:10px 12px; border-radius:12px; margin:8px 0; max-width:78% }
+  .bubble.me{ background:linear-gradient(90deg,var(--accent),var(--accent-2)); color:white; align-self:flex-end }
+  .bubble.other{ background:#fff5f5; color:var(--accent-2) }
+
+  .chat-row{ display:flex; gap:10px; align-items:center }
+  .chat-row input{ flex:1; padding:10px; border-radius:10px; border:1px solid rgba(155,31,31,0.12); }
+
+  /* Testimonials */
+  .testimonials{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px }
+  .testimonial{ background:linear-gradient(180deg,#fff,#fff7f7); padding:14px; border-radius:10px; }
+
+  /* Footer */
+  footer{ text-align:center; padding:26px; color:#fff; background:linear-gradient(90deg,var(--accent-2),var(--accent)); margin-top:28px; border-radius:8px; }
+
+  /* Responsive tweaks */
+  @media (max-width:800px){
+    .hero{ flex-direction:column; align-items:flex-start }
+    .hero-right{ width:100% }
+    .form-grid{ grid-template-columns:1fr }
+  }
+</style>
+</head>
+<body>
+
+<header class="appbar">
+  <div class="brand" style="cursor:pointer" onclick="go('home')">
+    <div class="logo"><i class="fa-solid fa-bowl-food" style="font-size:20px"></i></div>
+    <div>
+      <h1>Full Belly</h1>
+      <p style="opacity:.9">Conectando tecnologia e solidariedade</p>
+    </div>
+  </div>
+
+  <nav class="topnav" aria-label="navegação principal">
+    <a onclick="go('home')" href="#home">Início</a>
+    <a onclick="go('cadastro')" href="#cadastro">Cadastro</a>
+    <a onclick="go('doacoes')" href="#doacoes">Doações</a>
+    <a onclick="go('chat')" href="#chat">Chat</a>
+    <a onclick="go('sobre')" href="#sobre">Sobre</a>
+    <button class="cta" onclick="go('cadastro')"><i class="fa-solid fa-hand-holding-heart"></i>&nbsp;Participar</button>
+  </nav>
+</header>
+<div class="container">
+
+  <!-- HOME -->
+  <section id="home" class="page active">
+    <div class="hero">
+      <div class="hero-left">
+        <div class="eyebrow">Full Belly • Iniciativa Solidária</div>
+        <h2>Combater o desperdício alimentando quem precisa</h2>
+        <p>Conectamos restaurantes, ONGs, voluntários e pessoas em vulnerabilidade para reduzir o desperdício e garantir que alimentos cheguem a quem precisa — de forma segura, simples e eficiente.</p>
+
+        <div class="hero-cta">
+          <button class="big-btn doar" onclick="go('cadastro')"><i class="fa-solid fa-circle-plus"></i> Quero doar</button>
+          <button class="big-btn receber" onclick="go('cadastro')"><i class="fa-solid fa-hands-holding-child"></i> Quero receber</button>
+        </div>
+
+        <div class="steps" style="margin-top:20px">
+          <div class="step">
+            <div class="ico"><i class="fa-solid fa-user-plus"></i></div>
+            <h4>Cadastre-se</h4>
+            <p>Restaurantes e beneficiários criam perfil e informam disponibilidade e necessidades.</p>
+          </div>
+          <div class="step">
+            <div class="ico"><i class="fa-solid fa-box-open"></i></div>
+            <h4>Publique ofertas</h4>
+            <p>Doadores anunciam alimentos excedentes com quantidade e validade.</p>
+          </div>
+          <div class="step">
+            <div class="ico"><i class="fa-solid fa-truck"></i></div>
+            <h4>Logística</h4>
+            <p>Voluntários e ONGs organizam a coleta e entrega de forma rápida e segura.</p>
+          </div>
+          <div class="step">
+            <div class="ico"><i class="fa-solid fa-chart-line"></i></div>
+            <h4>Impacto</h4>
+            <p>Relatórios mostram refeições distribuídas, parceiros e alcance social.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="metric card">
+          <strong id="m-refeicoes">3.280</strong>
+          <small>Refeições distribuídas</small>
+        </div>
+        <div class="metric card">
+          <strong id="m-doadores">120</strong>
+          <small>Doadores ativos</small>
+        </div>
+        <div class="metric card">
+          <strong id="m-voluntarios">95</strong>
+          <small>Voluntários</small>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:22px; color:var(--accent)">Por que ajudar?</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px">
+      <div class="card">
+        <h4 style="margin:0 0 8px">Reduzir Desperdício</h4>
+        <p class="muted">Alimentos que sobrariam chegam a quem precisa — menor impacto ambiental e social.</p>
+      </div>
+      <div class="card">
+        <h4 style="margin:0 0 8px">Impacto Local</h4>
+        <p class="muted">Apoio direto a comunidades, creches, lares e famílias vulneráveis.</p>
+      </div>
+      <div class="card">
+        <h4 style="margin:0 0 8px">Transparência</h4>
+        <p class="muted">Relatórios e acompanhamento das entregas.</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:22px; color:var(--accent)">Depoimentos</h3>
+    <div class="testimonials" style="margin-top:12px">
+      <div class="testimonial">
+        <strong>Maria, voluntária</strong>
+        <p class="muted">"Participar do Full Belly me permite ajudar minha vizinhança de forma organizada e rápida."</p>
+      </div>
+      <div class="testimonial">
+        <strong>Restaurante Bom Sabor</strong>
+        <p class="muted">"Doar sobras seguras e aproveitar comida que iria para o lixo — ganha a comunidade e o planeta."</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CADASTRO -->
+  <section id="cadastro" class="page">
+    <div class="card">
+      <h2>Cadastro — Crie seu perfil</h2>
+      <form id="formCadastro">
+        <div class="form-grid">
+          <div>
+            <label>Tipo de usuário</label>
+            <select id="tipoUsuario" required>
+              <option value="">Selecione...</option>
+              <option value="pessoa">Pessoa Física (Beneficiário / Voluntário)</option>
+<option value="empresa">Empresa / Restaurante (Doador)</option>
+            </select>
+          </div>
+          <div>
+            <label>Telefone</label>
+            <input id="telefone" placeholder="(99) 99999-9999" />
+          </div>
+
+          <div class="full">
+            <label>Nome completo / Razão social</label>
+            <input id="nome" required />
+          </div>
+
+          <div>
+            <label>Email</label>
+            <input id="email" type="email" required />
+          </div>
+
+          <div>
+            <label>Senha</label>
+            <input id="senha" type="password" minlength="6" required />
+          </div>
+
+          <div>
+            <label>Confirmar senha</label>
+            <input id="senha2" type="password" minlength="6" required />
+          </div>
+
+          <div class="full" id="docField">
+            <!-- CPF or CNPJ inserido dinamicamente -->
+          </div>
+
+          <div class="full">
+            <label>Endereço (opcional)</label>
+            <input id="endereco" placeholder="Rua, número, bairro, cidade" />
+          </div>
+
+          <div class="full">
+            <label>Descrição (o que doa / precisa)</label>
+            <textarea id="descricao" rows="3" placeholder="Ex: Marmitas, pães, frutas, kits..."></textarea>
+          </div>
+        </div>
+
+        <div style="margin-top:12px; display:flex; gap:10px; align-items:center">
+          <button type="submit" class="btn-primary">Cadastrar</button>
+          <div id="cadMsg" style="color:var(--accent); font-weight:700"></div>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- DOAÇÕES -->
+  <section id="doacoes" class="page">
+    <div class="card">
+      <h2>Registrar Doação</h2>
+      <form id="formDoacao" style="margin-top:8px">
+        <div class="form-grid">
+          <div>
+            <label>Tipo de alimento</label>
+            <input id="alimento" required />
+          </div>
+          <div>
+            <label>Quantidade (unidades / kg)</label>
+            <input id="qtd" type="text" required />
+          </div>
+          <div>
+            <label>Validade</label>
+            <input id="validade" type="date" required />
+          </div>
+          <div>
+            <label>Local de retirada</label>
+            <input id="localRetirada" />
+          </div>
+        </div>
+
+        <div style="margin-top:12px">
+          <button class="btn-primary" type="submit">Publicar Doação</button>
+        </div>
+      </form>
+
+      <h3 style="margin-top:18px; color:var(--accent)">Ofertas Disponíveis</h3>
+      <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap">
+        <input id="filtroAlimento" placeholder="Filtrar por alimento" style="padding:8px;border-radius:8px;border:1px solid rgba(155,31,31,0.08)" />
+        <button onclick="renderDoacoes()" style="padding:8px 10px;border-radius:8px;border:none;background:#fff;color:var(--accent-2);font-weight:700">Aplicar filtro</button>
+      </div>
+
+      <div class="donations" id="listaDoacoes"></div>
+    </div>
+  </section>
+
+  <!-- CHAT -->
+  <section id="chat" class="page">
+    <div class="card">
+      <h2>Chat Solidário</h2>
+      <div class="chat-ui">
+        <div class="chat-box" id="chatBox" role="log" aria-live="polite"></div>
+        <div class="chat-row">
+          <input id="chatName" placeholder="Seu nome (ex: Maria)" />
+          <input id="chatText" placeholder="Digite uma mensagem..." onkeydown="if(event.key==='Enter'){sendMsg()}">
+          <button class="btn-primary" onclick="sendMsg()">Enviar</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOBRE -->
+  <section id="sobre" class="page">
+    <div class="card">
+      <h2>Sobre o Projeto Full Belly</h2>
+      <p>O <strong>Full Belly</strong> é uma iniciativa que utiliza a tecnologia para combater o desperdício de alimentos e a fome. Através da plataforma, restaurantes e estabelecimentos podem doar seus excedentes para pessoas e instituições em vulnerabilidade.</p>
+
+      <p>Nosso objetivo é criar uma rede solidária entre <strong>doadores, voluntários e beneficiários</strong>, conectando quem tem a oferecer com quem mais precisa. Assim, reduzimos o desperdício e promovemos um impacto social real.</p>
+
+      <h3 style="color:var(--accent)">Recursos do Sistema</h3>
+      <ul style="line-height:1.6">
+        <li>Cadastro de doadores, beneficiários e voluntários.</li>
+        <li>Ofertas de alimentos excedentes com detalhes de validade e localização.</li>
+        <li>Gestão de logística integrada com ONGs e entregadores solidários.</li>
+        <li>Chat para comunicação rápida entre usuários.</li>
+        <li>Relatórios de impacto social e transparência nas ações.</li>
+      </ul>
+
+      <p style="margin-top:12px">Junte-se a nós e ajude a espalhar solidariedade. Cada refeição doada faz a diferença!</p>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <p>&copy; 2025 Full Belly — Tecnologia e Solidariedade. Todos os direitos reservados.</p>
+</footer>
+
+<script>
+  // Navegação entre seções
+  function go(page){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
+    document.getElementById(page).classList.add('active')
+    window.scrollTo({top:0,behavior:'smooth'})
+  }
+
+  // Campo dinâmico CPF/CNPJ
+  const tipoUsuario = document.getElementById('tipoUsuario')
+  const docField = document.getElementById('docField')
+  tipoUsuario.addEventListener('change',()=>{
+    if(tipoUsuario.value==='empresa'){
+      docField.innerHTML = '<label>CNPJ</label><input id="cnpj" placeholder="00.000.000/0000-00" required>'
+    }else if(tipoUsuario.value==='pessoa'){
+      docField.innerHTML = '<label>CPF</label><input id="cpf" placeholder="000.000.000-00" required>'
+    }else{
+      docField.innerHTML = ''
+    }
+  })
+
+  // Simula cadastro
+  document.getElementById('formCadastro').addEventListener('submit',e=>{
+    e.preventDefault()
+    const nome=document.getElementById('nome').value.trim()
+    const email=document.getElementById('email').value.trim()
+    const senha=document.getElementById('senha').value
+    const senha2=document.getElementById('senha2').value
+    if(senha!==senha2){
+      alert('As senhas não coincidem!')
+      return
+    }
+    document.getElementById('cadMsg').textContent='Cadastro realizado com sucesso!'
+    e.target.reset()
+    setTimeout(()=>document.getElementById('cadMsg').textContent='',3000)
+  })
+
+  // Lista de doações simuladas
+  let doacoes=[
+    {alimento:'Pães artesanais',qtd:'20 unidades',validade:'2025-10-18',local:'Padaria do Centro'},
+    {alimento:'Marmitas',qtd:'10 porções',validade:'2025-10-16',local:'Restaurante Bom Sabor'},
+  ]
+
+  function renderDoacoes(){
+    const lista=document.getElementById('listaDoacoes')
+    const filtro=document.getElementById('filtroAlimento').value.toLowerCase()
+    lista.innerHTML=''
+    doacoes.filter(d=>!filtro||d.alimento.toLowerCase().includes(filtro))
+           .forEach(d=>{
+             const el=document.createElement('div')
+             el.className='donation-card'
+             el.innerHTML=`<div class="meta"><strong>${d.alimento}</strong><br><small>${d.qtd} — Validade: ${d.validade}</small><br><small>Local: ${d.local}</small></div>`
+             lista.appendChild(el)
+           })
+  }
+  renderDoacoes()
+
+  // Publicar nova doação
+  document.getElementById('formDoacao').addEventListener('submit',e=>{
+    e.preventDefault()
+    const alimento=document.getElementById('alimento').value
+    const qtd=document.getElementById('qtd').value
+    const validade=document.getElementById('validade').
+value
+    const local=document.getElementById('localRetirada').value||'Não informado'
+    doacoes.push({alimento,qtd,validade,local})
+    renderDoacoes()
+    e.target.reset()
+    alert('Doação publicada com sucesso!')
+  })
+
+  // Chat
+  const chatBox=document.getElementById('chatBox')
+  function sendMsg(){
+    const nome=document.getElementById('chatName').value.trim()||'Anônimo'
+    const txt=document.getElementById('chatText').value.trim()
+    if(!txt) return
+    const msg=document.createElement('div')
+    msg.className='bubble me'
+    msg.textContent=`${nome}: ${txt}`
+    chatBox.appendChild(msg)
+    document.getElementById('chatText').value=''
+    chatBox.scrollTop=chatBox.scrollHeight
+
+    // resposta simulada
+    setTimeout(()=>{
+      const reply=document.createElement('div')
+      reply.className='bubble other'
+      reply.textContent='Equipe Full Belly: Obrigado pela sua mensagem! ❤️'
+      chatBox.appendChild(reply)
+      chatBox.scrollTop=chatBox.scrollHeight
+    },800)
+  }
+</script>
+
+</body>
+</html>
