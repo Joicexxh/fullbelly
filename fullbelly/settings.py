@@ -85,3 +85,16 @@ LANGUAGE_CODE = 'pt-br'
 TIME_ZONE = 'America/Fortaleza'
 USE_I18N = True
 USE_TZ = True
+INSTALLED_APPS = [
+    ...,
+    'corsheaders',
+]
+
+MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    ...,
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "https://meu-frontend.vercel.app",
+]
