@@ -1,14 +1,16 @@
 from pathlib import Path
 import os
 
+# BASE
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.environ.get('SECRET_KEY', 'unsafe-dev-key')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'unsafe-secret-key')
 
 DEBUG = False
 
 ALLOWED_HOSTS = ['.onrender.com']
 
+# APPS
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -17,9 +19,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'corsheaders',
+    # terceiros
     'rest_framework',
+    'corsheaders',
 
+    # app
     'core',
 ]
 
@@ -63,3 +67,8 @@ DATABASES = {
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+LANGUAGE_CODE = 'pt-br'
+TIME_ZONE = 'America/Fortaleza'
+USE_I18N = True
+USE_TZ = True
