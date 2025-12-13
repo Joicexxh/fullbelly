@@ -1,20 +1,14 @@
-# fullbelly/settings.py
 from pathlib import Path
 import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY
-SECRET_KEY = os.environ.get(
-    'SECRET_KEY',
-    'django-insecure-dev-key'  # só para desenvolvimento
-)
+SECRET_KEY = os.environ.get('SECRET_KEY', 'unsafe-dev-key')
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['.onrender.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['.onrender.com']
 
-# APPS
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -23,16 +17,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # terceiros
-    'rest_framework',
-    'rest_framework.authtoken',
     'corsheaders',
+    'rest_framework',
 
-    # app local
     'core',
 ]
 
-# MIDDLEWARE
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -44,11 +34,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# URLS / WSGI
 ROOT_URLCONF = 'fullbelly.urls'
-WSGI_APPLICATION = 'fullbelly.wsgi.application'
 
-# TEMPLATES
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -65,7 +52,8 @@ TEMPLATES = [
     },
 ]
 
-# DATABASE
+WSGI_APPLICATION = 'fullbelly.wsgi.application'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -73,23 +61,5 @@ DATABASES = {
     }
 }
 
-# STATIC FILES (RENDER)
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [BASE_DIR / 'static']
-
-# I18N
-LANGUAGE_CODE = 'pt-br'
-TIME_ZONE = 'America/Fortaleza'
-USE_I18N = True
-USE_TZ = True
-
-# DRF
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
-    ]
-}
-
-# CORS
-CORS_ALLOW_ALL_ORIGINS = True
