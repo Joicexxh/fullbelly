@@ -1,22 +1,21 @@
-# fullbelly/settings.py (apenas trechos com mudanças importantes)
-import os
+# fullbelly/settings.py
 from pathlib import Path
+import os
 
-ALLOWED_HOSTS = ['.onrender.com']
+# BASE
+BASE_DIR = Path(__file__).resolve().parent.parent
 
-STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+# SECURITY
+SECRET_KEY = os.environ.get(
+    'SECRET_KEY',
+    'django-insecure-dev-key'  # só para desenvolvimento
+)
 
 DEBUG = False
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+ALLOWED_HOSTS = ['.onrender.com', 'localhost', '127.0.0.1']
 
-SECRET_KEY = 'troque-esta-chave-por-uma-segura'  # troque antes de ir pra produção
-DEBUG = True
-ALLOWED_HOSTS = []
-
-
-# apps
+# APPS
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -24,14 +23,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     # terceiros
     'rest_framework',
     'rest_framework.authtoken',
-    # app
+    'corsheaders',
+
+    # app local
     'core',
 ]
 
+# MIDDLEWARE
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -41,12 +45,15 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# URLS / WSGI
 ROOT_URLCONF = 'fullbelly.urls'
+WSGI_APPLICATION = 'fullbelly.wsgi.application'
 
+# TEMPLATES
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [ BASE_DIR / 'templates' ],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -59,9 +66,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'fullbelly.wsgi.application'
-
-# banco simples sqlite (padrão)
+# DATABASE
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -69,40 +74,23 @@ DATABASES = {
     }
 }
 
-# rest framework + JWT via simplejwt
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
-    )
-}
-
-# static files
+# STATIC FILES (RENDER)
 STATIC_URL = '/static/'
-
-STATICFILES_DIRS = [
-    BASE_DIR / 'static'
-]
-
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [BASE_DIR / 'static']
 
-# internacionalização
+# I18N
 LANGUAGE_CODE = 'pt-br'
 TIME_ZONE = 'America/Fortaleza'
 USE_I18N = True
 USE_TZ = True
-INSTALLED_APPS = [
-    ...,
-    'corsheaders',
-]
 
-MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
-    ...,
-]
+# DRF
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ]
+}
 
-CORS_ALLOWED_ORIGINS = [
-    "https://meu-frontend.vercel.app",
-]
+# CORS
+CORS_ALLOW_ALL_ORIGINS = True
