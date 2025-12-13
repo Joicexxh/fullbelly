@@ -2,11 +2,19 @@
 import os
 from pathlib import Path
 
+ALLOWED_HOSTS = ['.onrender.com']
+
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+DEBUG = False
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'troque-esta-chave-por-uma-segura'  # troque antes de ir pra produção
 DEBUG = True
 ALLOWED_HOSTS = []
+
 
 # apps
 INSTALLED_APPS = [
