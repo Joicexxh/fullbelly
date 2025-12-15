@@ -11,9 +11,11 @@ SECRET_KEY = os.environ.get(
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    "fullbelly.onrender.com",       # backend no Render
-    "www.fullbelly.onrender.com",   # se usar www
+    "fullbellyy.onrender.com",
+    "localhost",
+    "127.0.0.1",
 ]
+
 
 
 INSTALLED_APPS = [
