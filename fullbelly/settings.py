@@ -1,5 +1,7 @@
 from pathlib import Path
+import os
 
+<<<<<<< HEAD
 # =========================
 # BASE
 # =========================
@@ -14,6 +16,18 @@ ALLOWED_HOSTS = []
 # =========================
 # APLICATIVOS
 # =========================
+=======
+# BASE
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+SECRET_KEY = os.environ.get('SECRET_KEY', 'unsafe-secret-key')
+
+DEBUG = False
+
+ALLOWED_HOSTS = ['.onrender.com']
+
+# APPS
+>>>>>>> 3fc719fe7243fe1692ff01ce3120f540b38b3d2b
 INSTALLED_APPS = [
     # Django
     'django.contrib.admin',
@@ -23,12 +37,20 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+<<<<<<< HEAD
     # Terceiros
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
 
     # Apps do projeto
+=======
+    # terceiros
+    'rest_framework',
+    'corsheaders',
+
+    # app
+>>>>>>> 3fc719fe7243fe1692ff01ce3120f540b38b3d2b
     'core',
 ]
 
@@ -53,6 +75,7 @@ MIDDLEWARE = [
 # =========================
 ROOT_URLCONF = 'fullbelly.urls'
 
+<<<<<<< HEAD
 WSGI_APPLICATION = 'fullbelly.wsgi.application'
 
 
@@ -71,12 +94,17 @@ TEMPLATES = [
         },
     },
 ]
+=======
+>>>>>>> 3fc719fe7243fe1692ff01ce3120f540b38b3d2b
 
 
+<<<<<<< HEAD
 
 # =========================
 # BANCO DE DADOS
 # =========================
+=======
+>>>>>>> 3fc719fe7243fe1692ff01ce3120f540b38b3d2b
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -84,6 +112,7 @@ DATABASES = {
     }
 }
 
+<<<<<<< HEAD
 
 # =========================
 # AUTH / PASSWORDS
@@ -123,10 +152,16 @@ CORS_ALLOWED_ORIGINS = [
 # =========================
 # INTERNACIONALIZAÇÃO
 # =========================
+=======
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+>>>>>>> 3fc719fe7243fe1692ff01ce3120f540b38b3d2b
 LANGUAGE_CODE = 'pt-br'
 TIME_ZONE = 'America/Fortaleza'
 USE_I18N = True
 USE_TZ = True
+<<<<<<< HEAD
 
 
 # =========================
@@ -146,3 +181,5 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 # =========================
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+=======
+>>>>>>> 3fc719fe7243fe1692ff01ce3120f540b38b3d2b
