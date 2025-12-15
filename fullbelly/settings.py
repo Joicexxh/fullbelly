@@ -1,29 +1,43 @@
-# fullbelly/settings.py (apenas trechos com mudanças importantes)
-import os
 from pathlib import Path
 
+# =========================
+# BASE
+# =========================
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'troque-esta-chave-por-uma-segura'  # troque antes de ir pra produção
+SECRET_KEY = 'troque-esta-chave-por-uma-segura'
 DEBUG = True
+
 ALLOWED_HOSTS = []
 
-# apps
+
+# =========================
+# APLICATIVOS
+# =========================
 INSTALLED_APPS = [
+    # Django
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # terceiros
+
+    # Terceiros
     'rest_framework',
     'rest_framework.authtoken',
-    # app
+    'corsheaders',
+
+    # Apps do projeto
     'core',
 ]
 
+
+# =========================
+# MIDDLEWARE
+# =========================
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -33,12 +47,19 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
+# =========================
+# URL / WSGI
+# =========================
 ROOT_URLCONF = 'fullbelly.urls'
+
+WSGI_APPLICATION = 'fullbelly.wsgi.application'
+
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [ BASE_DIR / 'templates' ],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -51,9 +72,11 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'fullbelly.wsgi.application'
 
-# banco simples sqlite (padrão)
+
+# =========================
+# BANCO DE DADOS
+# =========================
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -61,40 +84,65 @@ DATABASES = {
     }
 }
 
-# rest framework + JWT via simplejwt
+
+# =========================
+# AUTH / PASSWORDS
+# =========================
+AUTH_PASSWORD_VALIDATORS = [
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
+]
+
+
+# =========================
+# DJANGO REST FRAMEWORK + JWT
+# =========================
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
-    )
+    ),
 }
 
-# static files
-STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    BASE_DIR / 'static'
+# =========================
+# CORS
+# =========================
+CORS_ALLOWED_ORIGINS = [
+    "https://meu-frontend.vercel.app",
 ]
 
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+# Para desenvolvimento (opcional)
+# CORS_ALLOW_ALL_ORIGINS = True
 
-# internacionalização
+
+# =========================
+# INTERNACIONALIZAÇÃO
+# =========================
 LANGUAGE_CODE = 'pt-br'
 TIME_ZONE = 'America/Fortaleza'
 USE_I18N = True
 USE_TZ = True
-INSTALLED_APPS = [
-    ...,
-    'corsheaders',
+
+
+# =========================
+# STATIC FILES
+# =========================
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
 ]
 
-MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
-    ...,
-]
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-CORS_ALLOWED_ORIGINS = [
-    "https://meu-frontend.vercel.app",
-]
+
+# =========================
+# DEFAULTS
+# =========================
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
