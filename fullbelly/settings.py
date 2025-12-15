@@ -11,10 +11,10 @@ SECRET_KEY = os.environ.get(
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    "fullbelly.onrender.com",
-    "localhost",
-    "127.0.0.1",
+    "fullbelly.onrender.com",       # backend no Render
+    "www.fullbelly.onrender.com",   # se usar www
 ]
+
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -76,3 +76,13 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+INSTALLED_APPS += [
+    "corsheaders",
+]
+
+MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",  # deve ser o primeiro
+] + MIDDLEWARE
+CORS_ALLOWED_ORIGINS = [
+    "https://fullbelly-front.vercel.app",
+]
